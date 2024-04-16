@@ -31,7 +31,7 @@ export class CategoryRepository{
     async delete(id: string){
         try{
             const CategoryDelete = this.categoryFindID(id);
-            this.categorys = this.categorys.filter(x => x.id !== id)
+            this.categorys = this.categorys.filter(x => x.idCategory !== id)
             return CategoryDelete;
         } catch ( e ) {
             return e.message
@@ -62,26 +62,16 @@ export class CategoryRepository{
     }
 
     private categoryFindID(id: string){
-        const categoryFind = this.categorys.find(category => category.id === id)
+        const categoryFind = this.categorys.find(category => category.idCategory === id)
         if (!categoryFind){
             throw new Error('Autor não existe!')
         }
         return categoryFind;
     }
 
-    async haveCategory(category: string, operacao: string){
-        const categorySlug: string = this.convertSlug(category);
-        let findCategory: CategoryEntity
-        if (operacao === 'update'){
-            findCategory = this.categorys.find(c => c.slugName === categorySlug && c.name === category)
-        } else {
-            findCategory = this.categorys.find(c => c.slugName === categorySlug)
-        }
-        return findCategory !== undefined
-    }
-
     private convertSlug(slug: string){
         const convert = slugify(slug, {lower: true});
         return convert;
-    }
+    }     
+
 }

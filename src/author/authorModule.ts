@@ -1,10 +1,18 @@
 import { Module } from "@nestjs/common";
+import { TypeOrmModule } from "@nestjs/typeorm";
+
 import { AuthorController } from "./authorController"
-import { AuthorRepository } from "./authorRepository";
+import { AuthorService } from "./authorService";
+import { AuthorEntity } from "./authorEntity";
 import { EmailAuthorValidator } from "src/validator/emailAuthorValidator";
 
+
+import { AuthorRepository } from "./authorRepository";
+
+
 @Module({
+    imports: [TypeOrmModule.forFeature([AuthorEntity])],
     controllers: [AuthorController],
-    providers:[AuthorRepository, EmailAuthorValidator]
+    providers:[AuthorService, EmailAuthorValidator], //[AuthorRepository, ]
 })
 export class AuthorModule{}

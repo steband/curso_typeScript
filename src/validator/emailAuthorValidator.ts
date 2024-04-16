@@ -1,11 +1,11 @@
 import { Injectable } from "@nestjs/common";
 import { ValidationArguments, ValidationOptions, ValidatorConstraint, ValidatorConstraintInterface, registerDecorator } from "class-validator";
-import { AuthorRepository } from "../author/authorRepository";
+import { AuthorService } from "src/author/authorService";
 
 @Injectable()
 @ValidatorConstraint({async: true})
 export class EmailAuthorValidator implements ValidatorConstraintInterface{
-    constructor( private authorRepository: AuthorRepository){}
+    constructor( private authorRepository: AuthorService){}
     
 
     async validate(value: any, ValidationArguments?: ValidationArguments): Promise<boolean>{

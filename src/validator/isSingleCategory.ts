@@ -1,15 +1,17 @@
 import { ValidationArguments, ValidationOptions, ValidatorConstraint, ValidatorConstraintInterface, registerDecorator } from "class-validator";
 import { CategoryRepository } from "../category/categoryRepository";
+import { CategoryService } from "src/category/categoryService";
+
 import { Injectable } from "@nestjs/common";
 
 @Injectable()
 @ValidatorConstraint({async: true})
 export class  isSingleCategory implements ValidatorConstraintInterface{
-    constructor(private categoryRepositiry: CategoryRepository){}
+    constructor(private CategoryService: CategoryService){}
 
     async validate(value: any, validationArguments?: ValidationArguments): Promise<boolean> {
         const possivelOperacao = validationArguments?.constraints[0];
-        const usurioComEmailExite = await this.categoryRepositiry.haveCategory(value, possivelOperacao)
+        const usurioComEmailExite = await this.CategoryService.haveCategory(value, possivelOperacao)
 
         return !usurioComEmailExite;
     }

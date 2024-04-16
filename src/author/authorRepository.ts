@@ -34,7 +34,7 @@ export class AuthorRepository{
     async delete(id: string){
         try {
             const authorDelete = this.authorFindID(id);
-            this.authors = this.authors.filter(x => x.id !== id)
+            this.authors = this.authors.filter(x => x.idAuthor !== id)
             return authorDelete;
         } catch ( e ){
             return e.message
@@ -70,7 +70,7 @@ export class AuthorRepository{
     }
 
     private async authorFindID(id: string){
-        const authorFind = await this.authors.find(author => author.id === id)
+        const authorFind = await this.authors.find(author => author.idAuthor === id)
         if (!authorFind){
             throw new Error('Autor não existe!')
         }
@@ -84,11 +84,6 @@ export class AuthorRepository{
         return authorFind;
     }
 
-    async existeComEmail(email: string){
-        const authorEmail = this.authors.find(author => author.email === email
-        );
-        return authorEmail !== undefined;
-    }
 
 
 
